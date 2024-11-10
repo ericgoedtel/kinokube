@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: prowlarr
+  name: prowlarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: prowlarr
+  template:
+    metadata:
+      labels:
+        run: prowlarr
+    spec:
+      containers:
+      - env: []
+        image: linuxserver/prowlarr
+        name: prowlarr
+        ports:
+        - containerPort: 9696
+          name: webui
+        readinessProbe:
+          httpGet:
+            path: "/api/v1/system/status"
+            port: webui
+          initialDelaySeconds: 30
+          periodSeconds: 10
