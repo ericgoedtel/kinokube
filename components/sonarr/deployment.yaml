@@ -16,7 +16,9 @@ spec:
         run: sonarr
     spec:   
       containers:
-      - env: []
+      - env:
+        - name: SONARR__SERVER__URLBASE
+          value: /sonarr
         image: linuxserver/sonarr
         name: sonarr
         ports:
