@@ -16,9 +16,9 @@ spec:
         run: radarr
     spec:
       containers:
-      - env:
-        - name: RADARR__SERVER__URLBASE
-          value: /radarr
+      - envFrom:
+        - configMapRef:
+            name: radarr
         image: linuxserver/radarr
         name: radarr
         ports:

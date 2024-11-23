@@ -16,9 +16,9 @@ spec:
         run: prowlarr
     spec:
       containers:
-      - env:
-        - name: PROWLARR__SERVER__URLBASE
-          value: /prowlarr
+      - envFrom:
+        - configMapRef:
+            name: sonarr
         image: linuxserver/prowlarr
         name: prowlarr
         ports:
