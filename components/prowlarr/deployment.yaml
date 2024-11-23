@@ -24,9 +24,19 @@ spec:
         ports:
         - containerPort: 9696
           name: webui
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - curl "http://localhost:9696/radarr/api/v3/health?ApiKey=$(sed -ne '/ApiKey/{s/.*<ApiKey>\(.*\)<\/ApiKey>.*/\1/p;q;}' </config/config.xml)"
+          initialDelaySeconds: 30
+          periodSeconds: 10
         readinessProbe:
-          httpGet:
-            path: "/api/v1/system/status"
-            port: webui
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - curl "http://localhost:9696/radarr/api/v3/system/status?ApiKey=$(sed -ne '/ApiKey/{s/.*<ApiKey>\(.*\)<\/ApiKey>.*/\1/p;q;}' </config/config.xml)"
           initialDelaySeconds: 30
           periodSeconds: 10
